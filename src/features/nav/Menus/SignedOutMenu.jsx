@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Button } from 'semantic-ui-react';
+import { Menu, Button } from 'semantic-ui-react/dist/commonjs';
 
 const SignedOutMenu = ({ signIn }) => {
   return (
