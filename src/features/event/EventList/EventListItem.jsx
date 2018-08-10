@@ -5,7 +5,7 @@ import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
 
 class EventListItem extends Component {
   render() {
-    const { event, onEventOpen, deleteEvent } = this.props;
+    const { event, deleteEvent } = this.props;
     return (
       <Segment.Group>
         <Segment>
