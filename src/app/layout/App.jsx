@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Menu,  Container, Button } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
 import EventDashboard from '../../features/event/EventDashboard/EventDashboard';
 import NavBar from '../../features/nav/NavBar/NavBar';
