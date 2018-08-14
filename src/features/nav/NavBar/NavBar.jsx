@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Menu, Container, Button } from 'semantic-ui-react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignedOutMenu from '../Menus/SignedOutMenu';
 import SignedInMenu from '../Menus/SignedInMenu';
-
-
+import { openModal } from '../../modals/modalActions';
+import { logout } from '../../auth/authActions';
+const actions = {
+  openModal,
+  logout,
+}
 class NavBar extends Component {
-  state = {
-    authenticated: false,
-  }
+
   handleSignIn = () => {
-    this.setState({
-      authenticated: true
-    });
+  this.props.openModal('LoginModal')
   }
 
+  handleRegister= () => {
+    this.props.openModal('RegisterModal')
+  }
   handleSignOut = () => {
-    this.setState({
-      authenticated: false
-    });
+    this.props.logout();
     this.props.history.push('/');
-
   }
   render() {
-    const { authenticated } = this.state;
+    const {  currentUser, authenticated } = this.props;
     return (
       <Menu inverted fixed="top">
         <Container>
@@ -36,7 +37,6 @@ class NavBar extends Component {
           {authenticated &&
             <Menu.Item as={NavLink} to="/people" name="People" />
           }
-
           {authenticated &&
             <Menu.Item>
               <Button
@@ -50,13 +50,25 @@ class NavBar extends Component {
             </Menu.Item>
           }
           {authenticated
-            ? (<SignedInMenu signOut={this.handleSignOut} />)
-            : (<SignedOutMenu signIn={this.handleSignIn} />)
+            ? (<SignedInMenu signOut={this.handleSignOut} currentUser={currentUser} />)
+            : (<SignedOutMenu signIn={this.handleSignIn}  register={this.handleRegister} />)
           }
         </Container>
       </Menu>
     );
   }
 }
-
-export default withRouter(NavBar);
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    currentUser: state.auth.currentUser,
+    authenticated: state.auth.authenticated,
+  }
+}
+const mapDisptachToProps = (dispatch) => {
+  return {
+    openModal: () => dispatch(openModal()),
+    logout: () => dispatch(logout()),
+  }
+}
+export default withRouter(connect(mapStateToProps, actions)(NavBar));
