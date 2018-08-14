@@ -7,7 +7,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { openModal } from '../modals/modalActions'
 
-import { incrementCounter, decrementCounter } from './testActions'
+import { incrementAsync, decrementAsync } from './testActions'
 
 class TestComponent extends Component {
   static defaultProps = {
@@ -37,19 +37,17 @@ class TestComponent extends Component {
   };
 
   render() {
-    console.log('props', this.props);
-    const { inc, dec, openModal } = this.props;
+    const { inc, dec, openModal, loading } = this.props;
     const inputProps = {
       value: this.state.address,
       onChange: this.onChange,
     }
     return (
       <div>
-
         <h1>Test Area</h1>
         <h3> the anwser is : { this.props.data }</h3>
-        <Button onClick={() => inc()} color="green"  content="Increment" />
-        <Button onClick={() => dec()} color="red"  content="Decrement" />
+        <Button loading={loading} onClick={() => inc()} color="green"  content="Increment" />
+        <Button loading={loading} onClick={() => dec()} color="red"  content="Decrement" />
         <Button onClick={(data) => openModal('TestModal', data)} color="teal"  content="Open Modal" />
         <form onSubmit={this.handleFormSubmit}>
          { this.state.scriptLoaded && 
@@ -64,13 +62,14 @@ class TestComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.test.data
+    data: state.test.data,
+    loading: state.test.loading,
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    inc: () => dispatch(incrementCounter()),
-    dec: () => dispatch(decrementCounter()),
+    inc: () => dispatch(incrementAsync()),
+    dec: () => dispatch(decrementAsync()),
     openModal: (data) => dispatch(openModal(data)),
   }
 }

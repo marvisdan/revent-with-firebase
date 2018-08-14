@@ -80,7 +80,6 @@ class EventForm extends Component {
     values.date = moment(values.date).format();
     values.venueLatLng = this.state.venueLatLng;
     const { createEvent, updateEvent, history, initialValues } = this.props;
-    console.log("initialValues", initialValues);
 
     if (initialValues.id) {
       updateEvent(values);
