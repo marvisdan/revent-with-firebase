@@ -20,8 +20,8 @@ class EventDetailedInfo extends Component {
   render() {
     const { event } = this.props;
 
-    let date= format(event.date, 'dddd Do MMMM');
-    let dateTime = format(event.date, 'h:mm A');
+    let date= format(event.date.toDate(), 'dddd Do MMMM');
+    let dateTime = format(event.date.toDate(), 'h:mm A');
     return (
       <Segment.Group>
         <Segment attached="top">
